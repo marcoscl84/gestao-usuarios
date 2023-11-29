@@ -3,7 +3,8 @@ var User = require("../models/User")
 class UserController{
 
     async index(req, res){
-
+        var users = await User.findAll();
+        res.json(users);
     }
 
     async create(req, res){
