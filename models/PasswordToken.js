@@ -47,9 +47,13 @@ class PasswordToken {
                 return {status: false};
             }
         } catch (error) {
-            
+            console.log(error)
+            return {status: false};
         }
-        
+    }
+
+    async setUsed(token){
+        await knex.update({used: 1}).where({token: token}).table("passwordtoken")
     }
 
 }
