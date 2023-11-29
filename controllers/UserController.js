@@ -41,6 +41,37 @@ class UserController{
         res.status(200);
         res.send("Usuário cadastrado!")
     }
+
+    async edit(req, res){
+        var {id, email, nome, role} = req.body;
+        var result = await User.update(id, email, nome, role);
+
+        if(result != undefined){
+            if(result.status){
+                res.status(200);
+                res.send("Editado com sucesso!")
+            } else {
+                res.status(406);
+                res.send(result.error);
+            }
+        } else {
+            res.status(406);
+            res.send("Erro no servidor!");
+        }
+    }
+
+    async delete(req, res){
+        var id = req.params.id;
+        var result = await User.delete(id);
+
+        if(result.status){
+            res.status(200);
+            res.send("Excluído com sucesso!");
+        } else {
+            res.status(406);
+            res.send(result.error);
+        }
+    }
 }
 
 module.exports = new UserController();

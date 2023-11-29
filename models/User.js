@@ -55,6 +55,62 @@ class User {
             return false;
         }     
     }
+
+    async update(id, email, name, role){
+        var user = this.findById(id);
+
+        if(user != undefined){
+            var editUser = {};
+
+            if(email != undefined){
+                if(email != user.email){
+                    var resultEmail = await this.findEmail(email);
+                    
+                    if(!resultEmail){
+                        editUser.email = email;
+                    } else {
+                        return {status: false, error: "E-mail já cadastrado!"}
+                    }
+                }
+            }
+
+            if(name != undefined){
+                editUser.name = name;
+            }
+
+            if(role != undefined){
+                editUser.role = role;
+            }
+
+            try {
+                await knex.update(editUser).where({id: id}).table("users")
+                return {status: true}
+            } catch (error) {
+                return {status: false, error: error}
+            }
+            
+
+        } else {
+            return {status: false, error: "Usuário não encontrado!"}
+        }
+    }
+
+    async delete(id){
+        var user = await this.findById(id);
+
+        if(user != undefined){
+
+            try {
+                await knex.delete().where({id: id}).table("users");
+                return {status: true};
+            } catch (error) {
+                return {status: false, error: error}
+            }
+        } else {
+            return {status: false, error: "Usuário não encontrado!"}
+        }
+    }
+
 }
 
 
