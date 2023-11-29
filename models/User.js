@@ -121,11 +121,17 @@ class User {
                 await knex.delete().where({id: id}).table("users");
                 return {status: true};
             } catch (error) {
-                return {status: false, error: error}
+                return {status: false, error: error};
             }
         } else {
-            return {status: false, error: "Usuário não encontrado!"}
+            return {status: false, error: "Usuário não encontrado!"};
         }
+    }
+
+    async changePassword(newPassword, id, token){
+        var hash = await bcrypt.hash(newPassword, 10);
+
+        await knex.update({password: hash}).where({id: id}).table("users");
     }
 }
 
