@@ -110,7 +110,6 @@ class User {
             return {status: false, error: "Usuário não encontrado!"}
         }
     }
-
 }
 
 
