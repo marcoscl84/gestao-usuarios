@@ -130,6 +130,7 @@ class UserController{
             }
 
         } else {
+            res.status(406);
             res.json({ status: false, error: "Usuário não encontrado!" })
         }
     }
