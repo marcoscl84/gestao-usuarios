@@ -20,12 +20,14 @@ module.exports = function(req, res, next){
                 return;
             }
         } catch (error) {
-            console.log(error);
+            res.status(403);
+            res.send("Erro na autenticação!");
+            return;
         }
 
     } else {
         res.status(403);
-        res.send("Você não está autorizado!");
+        res.send("Você não está autenticado!");
         return;
     }
 
