@@ -75,9 +75,11 @@ class User {
     }
 
     async update(id, email, name, role){
-        var user = this.findById(id);
+
+        var user = await this.findById(id);
 
         if(user != undefined){
+
             var editUser = {};
 
             if(email != undefined){
